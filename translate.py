@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+#-*-coding:utf-8-*-
+
+
 from googletrans import Translator
 from tkinter import scrolledtext , Tk , Label , Entry ,Button , INSERT , END 
 from tkinter.ttk import Combobox
