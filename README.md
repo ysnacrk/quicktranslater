@@ -8,4 +8,6 @@ Desktop dictionary application to quickly translate documents
 <img src="ornek.gif" border="0" />
 
 # TO-DO
-- language detection and image copying be fixed
+
+- image copying be fixed
+- close key to be added
