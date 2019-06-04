@@ -9,8 +9,10 @@ from tkinter.ttk import Combobox
 class Translate:
 
     def __init__(self):
+
         self.window = Tk()
-        
+        self.trans = Translator()
+
         self.window.title("Translate Me")
         self.window.geometry('680x430')
 
@@ -29,7 +31,9 @@ class Translate:
 
         self.btn = Button(self.window, text="Translate", command=self.clicked)
         self.btn.grid(column=0, row=12)
-    
+        
+        self.btn2 = Button(self.window, text="Detect", command=self.detected)
+        self.btn2.grid(column=1, row=12)
 
         self.combo = Combobox(self.window)
         self.combo['values']= ("tr", "en")
@@ -39,17 +43,27 @@ class Translate:
 
         self.combo2 = Combobox(self.window)
         self.combo2['values']= ("tr" , "en")
-        self.combo2.current(1) #set the selected item
+        self.combo2.current(0) #set the selected item
 
         self.combo2.grid(column=1, row=1)
 
     def clicked(self):
+
         self.txt2.delete(1.0,END)
         self.ret = self.txt.get(1.0 , END)
-        self.trans = Translator()
-        self.s=self.trans.translate(str(self.ret), src=str(self.combo.get()) , dest=str(self.combo2.get()))
+        self.s = self.trans.translate(str(self.ret), src=str(self.combo.get()) , dest=str(self.combo2.get()))
         self.txt2.insert(INSERT, self.s.text)
-    
+        
+
+    def detected(self):
+
+        self.txt2.delete(1.0,END)
+        self.ret2 = self.txt.get(1.0 , END)
+        self.det = self.trans.detect(str(self.ret2))
+        if str(self.det.lang) != self.combo.get():
+            self.combo.set(self.det.lang)
+
+
     def loop(self):
         self.window.mainloop()
 
@@ -58,4 +72,5 @@ class Translate:
 if __name__ == '__main__':
     translate = Translate()
     translate.loop()
+
 
