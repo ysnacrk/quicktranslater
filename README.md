@@ -9,5 +9,5 @@ Desktop dictionary application to quickly translate documents
 
 # TO-DO
 
-- image copying be fixed
-- close key to be added
+- other languages to be added
+- icon to be added
