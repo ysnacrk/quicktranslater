@@ -11,3 +11,4 @@ Desktop dictionary application to quickly translate documents
 
 - other languages to be added
 - icon to be added
+

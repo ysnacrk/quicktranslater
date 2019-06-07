@@ -3,7 +3,7 @@
 
 
 from googletrans import Translator
-from tkinter import scrolledtext , Tk , Label , Entry ,Button , INSERT , END , Frame
+from tkinter import scrolledtext , Tk , Label , Entry ,Button , INSERT , END , Frame , messagebox
 from tkinter.ttk import Combobox
 
 class Translate:
@@ -25,9 +25,11 @@ class Translate:
         self.txt = scrolledtext.ScrolledText(self.window,width=40,height=10)
         self.txt.grid(column=0,row=11)
         
+        #image clipboard error handling
         try:
             self.txt.insert(INSERT ,self.window.clipboard_get())
         except:
+            messagebox.showerror("WARNING ! ", "Clipboard must be str")
             print ("WARNING ! CLIPBOARD MUST BE STR")
 
         self.txt2 = scrolledtext.ScrolledText(self.window,width=40,height=10)
@@ -38,6 +40,9 @@ class Translate:
         
         self.btn2 = Button(self.window, text="Detect", command=self.detected)
         self.btn2.grid(column=1, row=12)
+
+        self.btnSwap = Button(self.window, text="Swap", command=self.clickedSwap)
+        self.btnSwap.grid(sticky = "W" , column=1, row = 1)
 
         self.combo = Combobox(self.window)
         self.combo['values']= ("tr", "en")
@@ -74,6 +79,11 @@ class Translate:
         
     def closeWindow(self , event):
         self.window.destroy()
+
+    def clickedSwap(self):
+        temp = self.combo.get()
+        self.combo.set(self.combo2.get())
+        self.combo2.set(temp)
 
 if __name__ == '__main__':
     translate = Translate()
