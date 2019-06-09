@@ -10,10 +10,19 @@ class Translate:
 
     def __init__(self):
 
+        self.languages = {
+                "en" : "İngilizce" ,
+                "tr" : "Türkçe" ,
+                "de" : "Almanca"
+        }
+        
+        self.valuesList = list(self.languages.values())
+        self.keysList = list(self.languages.keys())
+
         self.window = Tk()
         self.trans = Translator()
 
-        self.window.title("Translate Me")
+        self.window.title("Quick Translater")
         self.window.geometry('680x430')
 
         self.lbl = Label(self.window, text="Çevirilecek Metin")
@@ -45,13 +54,13 @@ class Translate:
         self.btnSwap.grid(sticky = "W" , column=1, row = 1)
 
         self.combo = Combobox(self.window)
-        self.combo['values']= ("tr", "en")
+        self.combo['values']= self.valuesList
         self.combo.current(1) #set the selected item
 
         self.combo.grid(column=0, row=1)
 
         self.combo2 = Combobox(self.window)
-        self.combo2['values']= ("tr" , "en")
+        self.combo2['values']= self.valuesList
         self.combo2.current(0) #set the selected item
 
         self.combo2.grid(column=1, row=1)
@@ -60,7 +69,10 @@ class Translate:
 
         self.txt2.delete(1.0,END)
         self.ret = self.txt.get(1.0 , END)
-        self.s = self.trans.translate(str(self.ret), src=str(self.combo.get()) , dest=str(self.combo2.get()))
+        _src = self.keysList[self.valuesList.index(str(self.combo.get()))]
+        _dest = self.keysList[self.valuesList.index(str(self.combo2.get()))]
+
+        self.s = self.trans.translate(str(self.ret), src=str(_src) , dest=str(_dest))
         self.txt2.insert(INSERT, self.s.text)
         
 
@@ -69,9 +81,15 @@ class Translate:
         self.txt2.delete(1.0,END)
         self.ret2 = self.txt.get(1.0 , END)
         self.det = self.trans.detect(str(self.ret2))
-
-        if str(self.det.lang) != self.combo.get():
-            self.combo.set(self.det.lang)
+        
+        try:
+            _det = self.valuesList[self.keysList.index(str(self.det.lang))]
+        except:
+            messagebox.showerror("WARNING ! ", "{} not in language list" .format(self.det.lang))
+            print ("{} NOT IN LANGUAGE LIST" .format(self.det.lang))
+    
+        if str(_det) != self.combo.get():
+            self.combo.set(self.valuesList[self.keysList.index(str(self.det.lang))])
 
     def loop(self):
         self.window.bind('<Escape>' , lambda a : self.closeWindow(a))
